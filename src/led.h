@@ -14,5 +14,5 @@ void turnOffLED(void) {
 }
 
 void toggleLED(void) {
-    LED_OUT_REG ^= (1 << LED_OUT_REG_BIT);  // drive pin high
+    LED_OUT_REG ^= (1 << LED_OUT_REG_BIT);  // toggle LED
 }

@@ -1,6 +1,8 @@
 #include <Arduino.h>
 #include "led.h"
 #include "button.h"
+#include "metronome.h"
+
 
 // Read the button periodically
 ISR(TIMER0_COMPA_vect) {
@@ -9,7 +11,7 @@ ISR(TIMER0_COMPA_vect) {
 
 // Metronome
 ISR(TIMER1_COMPA_vect) {
-  toggleLED();  
+  LED_OUT_REG ^= (1 << LED_OUT_REG_BIT); //Toggle LED
 }
 
 int main() {
@@ -18,7 +20,7 @@ int main() {
   initButton();
   initLED();
   sei();
-  setupTimer();
+  setupTimerButton();
   setupTimerMetronome();
 
   // loop
@@ -27,7 +29,6 @@ int main() {
     // If the button is pressed then modify the blinking rate
     cli();
     uint8_t button = debounced_button_value;
-    //printf("lol %i", button);
     debounced_button_value = 0;
     sei();
 
@@ -35,13 +36,6 @@ int main() {
         button_event = 0;
         modifyMetronomeRate(); // Modifies the rate of the metronome
     }
-    
 
-    /*
-    turnOnLED();
-    delay(1000);
-    turnOffLED();
-    delay(1000);
-    */
   }
 }

@@ -1,15 +1,18 @@
+// ---- Using the Arduino Uno Board --- //
+
 // I need to define the port and the register in the port that I should write to to configure the pin I want to use for the LED
 #define LED_PORT 1
 #define LED_PIN 5 // PB5 which is D13 in the arduino
 #define Button_PORT LED_PORT
 #define Button_PIN 1 // PB1 which is D9
-
+#define Metronome_Compare_Reg OCR1A
+#define Metronome_Counter_Reg TCNT1
 
 // Timer related code
-int cum_reduceFactor = 1;
+
 // Function to setup the timer for this hardware
 
-void setupTimer(void) {
+void setupTimer0(void) {
     TCCR0A = 0;
     TCCR0B = 0;
     TCNT0  = 0;
@@ -27,11 +30,11 @@ void setupTimer(void) {
     TCCR0B |= (1 << CS01) | (1 << CS00);
 }
 
-void setupTimerMetronome(void) {
+static inline void setupTimer1(void) {
     TCCR1A = 0;
     TCCR1B = 0;
     TCNT1  = 0;
-    // Compare target count
+    // Compare target count (16-bit timer → max 65535)
     OCR1A = 15624;
 
     // Timer setup to compare mode
@@ -53,16 +56,4 @@ const uint16_t values[] = {
     1953,
     976
 };
-
-void modifyMetronomeRate(void) {
-    step++;
-
-    if (step >= 5) {
-        step = 0;
-    }
-
-    cli();
-    OCR1A = values[step];
-    sei();
-}
 
