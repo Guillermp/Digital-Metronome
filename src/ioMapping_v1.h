@@ -47,13 +47,3 @@ static inline void setupTimer1(void) {
     TCCR1B |= (1 << CS12) | (1 << CS10);
 }
 
-volatile uint8_t step = 0;
-
-const uint16_t values[] = {
-    15624,
-    7812,
-    3906,
-    1953,
-    976
-};
-
