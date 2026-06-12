@@ -5,9 +5,29 @@
 #define Button_PIN 1 // PB1 which is D9
 
 
-
+// Timer related code
+int cum_reduceFactor = 1;
 // Function to setup the timer for this hardware
+
 void setupTimer(void) {
+    TCCR0A = 0;
+    TCCR0B = 0;
+    TCNT0  = 0;
+
+    // Compare value (8-bit timer → max 255)
+    OCR0A = 249;
+
+    // CTC mode (Clear Timer on Compare Match)
+    TCCR0A |= (1 << WGM01);
+
+    // Enable Compare Match A interrupt
+    TIMSK0 |= (1 << OCIE0A);
+
+    // Prescaler = 64
+    TCCR0B |= (1 << CS01) | (1 << CS00);
+}
+
+void setupTimerMetronome(void) {
     TCCR1A = 0;
     TCCR1B = 0;
     TCNT1  = 0;
@@ -22,5 +42,27 @@ void setupTimer(void) {
 
     // Set prescale to 1024
     TCCR1B |= (1 << CS12) | (1 << CS10);
+}
+
+volatile uint8_t step = 0;
+
+const uint16_t values[] = {
+    15624,
+    7812,
+    3906,
+    1953,
+    976
+};
+
+void modifyMetronomeRate(void) {
+    step++;
+
+    if (step >= 5) {
+        step = 0;
+    }
+
+    cli();
+    OCR1A = values[step];
+    sei();
 }
 
