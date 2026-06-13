@@ -5,12 +5,12 @@
 
 
 // Read the button periodically
-ISR(TIMER0_COMPA_vect) {
+ISR(Button_COMPA_vect) {
   readButton();
 }
 
 // Metronome
-ISR(TIMER1_COMPA_vect) {
+ISR(Metronome_COMPA_vect) {
   LED_OUT_REG ^= (1 << LED_OUT_REG_BIT); //Toggle LED
 }
 
@@ -22,6 +22,7 @@ int main() {
   sei();
   setupTimerButton();
   setupTimerMetronome();
+  initializeMetronomeBPM();
 
   // loop
   while(true){

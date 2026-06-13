@@ -1,17 +1,28 @@
-// ---- Using the Arduino Uno Board --- //
+// ---- Board version 1 --- //
+#include <avr/io.h>
+#include <avr/interrupt.h>
 
-// I need to define the port and the register in the port that I should write to to configure the pin I want to use for the LED
-#define LED_PORT 1
-#define LED_PIN 5 // PB5 which is D13 in the arduino
-#define Button_PORT LED_PORT
-#define Button_PIN 1 // PB1 which is D9
+// Registers and bits for the digital OUTPUT needed for the LED
+#define LED_OUT_REG PORTB
+#define LED_DIR_REG DDRB
+
+#define LED_OUT_REG_BIT  PORTB5
+#define LED_DIR_REG_BIT DDB5 // PB5 which is D13 in the Arduino Uno board
+
+// Registers and bits for the digital INPUT needed for the Button
+#define Button_OUT_REG PORTB
+#define Button_DIR_REG DDRB 
+
+#define Button_OUT_REG_BIT  PORTB1
+#define Button_DIR_REG_BIT DDB1 // PB1 which is D9 in the Arduino Uno board
+
+
 #define Metronome_Compare_Reg OCR1A
 #define Metronome_Counter_Reg TCNT1
 
 // Timer related code
-
 // Function to setup the timer for this hardware
-
+// Setup timer 0 to trigger an interrupt once per ms
 void setupTimer0(void) {
     TCCR0A = 0;
     TCCR0B = 0;
@@ -30,6 +41,8 @@ void setupTimer0(void) {
     TCCR0B |= (1 << CS01) | (1 << CS00);
 }
 
+#define COMP_Interrupt_Timer0 TIMER0_COMPA_vect
+
 static inline void setupTimer1(void) {
     TCCR1A = 0;
     TCCR1B = 0;
@@ -47,3 +60,6 @@ static inline void setupTimer1(void) {
     TCCR1B |= (1 << CS12) | (1 << CS10);
 }
 
+#define COMP_Interrupt_Timer1 TIMER1_COMPA_vect
+#define Prescaler_Timer1 1024 // Make sure is consistent
+#define F_clock_Timer1 16000000 // Make sure is consistent

@@ -1,6 +1,7 @@
 #include "ioMapping.h"
 
 #define setupTimerButton setupTimer0 //Renaming the particular timer to its purpose
+#define Button_COMPA_vect COMP_Interrupt_Timer0
 
 const int threshold_debouncing = 3000;
 volatile uint8_t debounced_button_value = 0;
