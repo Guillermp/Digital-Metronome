@@ -5,12 +5,12 @@
 #define PrescalerMetronome Prescaler_Timer1
 #define F_clockMetronome F_clock_Timer1
 
-volatile uint8_t step = 0;
+volatile static uint8_t step = 0;
 
 #define ARRAY_LEN(arr) (sizeof(arr) / sizeof(arr[0]))
 
 // Remember that the LED is toggles every timer interrupt so we need to ticks for one tick of the metronome!!!
-const double values[] = {
+const static double values[] = {
     7811.5,
     6695.4,
     5858.4,

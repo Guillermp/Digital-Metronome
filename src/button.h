@@ -3,9 +3,9 @@
 #define setupTimerButton setupTimer0 //Renaming the particular timer to its purpose
 #define Button_COMPA_vect COMP_Interrupt_Timer0
 
-const int threshold_debouncing = 3000;
+const static int threshold_debouncing = 3000;
 volatile uint8_t debounced_button_value = 0;
-volatile int counter = threshold_debouncing;
+volatile static int counter = threshold_debouncing;
 volatile uint8_t button_event = 0;
 
 void initButton(void) {
