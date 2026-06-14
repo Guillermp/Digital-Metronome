@@ -4,6 +4,8 @@
 
 This repo provides the implementation of a digital metronome using the ATmega328p independent of the board configuration. To choose a particular version of the board, with the particular choice of input and output ports set a compiler flag as shown in the `ioMapping.h` file.
 
+> Side Note: an implementation using the NUCLEO-F401RE can be found in the folder `Implementation on NUCLEO-F401RE`.
+
 Required hardware:
 - Button: To change the BPM of the metronome.
 - LED: Shows the metronome's pulse.
