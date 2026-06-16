@@ -9,7 +9,7 @@ This repo provides the implementation of a digital metronome using the ATmega328
 Required hardware:
 - Button: To change the BPM of the metronome.
 - LED: Shows the metronome's pulse.
-- Buzzer **(to be implemented in the future)**: to create the click of the metronome.
+- Buzzer: to create the click of the metronome.
 - Display **(to be implemented in the future)**: displays the current BPM of the metronome.
 
 ![image](Digital_Metronome_Architecture.png) 
@@ -28,9 +28,12 @@ Hardware interface specified in the ioMapping_v1.h and ioMapping.h files.
 Ex for the version 1 of the board (`ioMapping_v1.h`)
 Required hardware:
 - Button: Pin D9, which corresponds to the pin PB1 in the microcontroller. The timer 0 requests checking the reading periodically.
-- LED: Pin D13, which corresponds to the pin PB5 in the microcontroller. The timer 1 requests a toggle of the LED.
-- Buzzer **(to implemented in the future)**: to be determined.
+- LED: Pin D13, which corresponds to the pin PB5 in the microcontroller. The timer 1 toggles the LED.
+- Buzzer: Pin D8 which corresponds to the pin PB0 which in the microcontroller. The timer 1 toggles the Buzzer.
+
 - Display **(to implemented in the future)**: to be determined.
+
+> Note that the LED and the buzzers are toggled by Timer 1. This means that for a full click cycle (ON and OFF states), Timer 1 needs to tick twice: once to turn them on and once to turn them off. **This means that the frequency of Timer 1 is twice the frequency of the metronome**.
 
 ### Usage
 Set the compiler flag in the `platformio.ini` before building the project with the following:

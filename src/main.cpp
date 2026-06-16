@@ -2,6 +2,7 @@
 #include "led.h"
 #include "button.h"
 #include "metronome.h"
+#include "buzzer.h"
 
 
 // Read the button periodically
@@ -12,6 +13,7 @@ ISR(Button_COMPA_vect) {
 // Metronome
 ISR(Metronome_COMPA_vect) {
   LED_OUT_REG ^= (1 << LED_OUT_REG_BIT); //Toggle LED
+  Buzzer_OUT_REG ^= (1 << Buzzer_OUT_REG_BIT); //Toggle Buzzer
 }
 
 int main() {
@@ -19,6 +21,7 @@ int main() {
   // Setup
   initButton();
   initLED();
+  initBuzzer ();
   sei();
   setupTimerButton();
   setupTimerMetronome();

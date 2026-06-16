@@ -9,6 +9,14 @@
 #define LED_OUT_REG_BIT  PORTB5
 #define LED_DIR_REG_BIT DDB5 // PB5 which is D13 in the Arduino Uno board
 
+// Registers and bits for the digital OUTPUT needed for the Buzzer
+#define Buzzer_OUT_REG PORTB
+#define Buzzer_DIR_REG DDRB
+
+#define Buzzer_OUT_REG_BIT  PORTB0
+#define Buzzer_DIR_REG_BIT DDB0 // PB0 which is D8 in the Arduino Uno board
+
+
 // Registers and bits for the digital INPUT needed for the Button
 #define Button_OUT_REG PORTB
 #define Button_DIR_REG DDRB 
