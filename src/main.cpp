@@ -8,8 +8,8 @@
 // Read the button periodically
 ISR(Button_COMPA_vect) {
   //readButton_Up_only();
-  readButton(&debounced_button_value_Up, ButtonUp_Read_REG_BIT, &button_event_Up, &counterUp);
-  readButton(&debounced_button_value_Down, ButtonDown_Read_REG_BIT, &button_event_Down, &counterDown);
+  readButton(&button_up);
+  readButton(&button_down);
 }
 
 // Metronome
@@ -34,23 +34,24 @@ int main() {
   while(true){
 
     cli();
-    debounced_button_value_Up = 0;
-    debounced_button_value_Down = 0;
+    button_up.debounced_button_value = 0;
+    button_down.debounced_button_value = 0;
     sei();
 
     
-    if (button_event_Up == 1) {
+    if (button_up.button_event == 1) {
         cli();
-        button_event_Up = 0;
+        button_up.button_event = 0;
         sei();
         increaseMetronomeRate();
         Serial.println("Incresed the rate");
     }
-    if (button_event_Down == 1) {
+    if (button_down.button_event == 1) {
         cli();
-        button_event_Down = 0;
+        button_down.button_event = 0;
         sei();
         decreaseMetronomeRate();
+        Serial.println("Decreased the rate");
     }
 
   }

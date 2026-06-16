@@ -34,7 +34,7 @@
 #define ButtonDown_OUT_REG PORTB
 #define ButtonDown_DIR_REG DDRB 
 
-#define ButtonDown_OUT_REG_BIT  PORTB2
+#define ButtonDown_OUT_REG_BIT PORTB2
 #define ButtonDown_DIR_REG_BIT DDB2 // PB1 which is D9 in the Arduino Uno board
 
 #define ButtonDown_Read_REG PINB
@@ -49,6 +49,12 @@ static const uint8_t portBuzzer = _SFR_IO_ADDR(Buzzer_OUT_REG);
 static_assert(portLED == portBuzzer, "Choose the same port for the LED and the Buzzer");
 
 #define Shared_OUT_REG LED_OUT_REG
+
+static const uint8_t ReadButtonUp = _SFR_IO_ADDR(ButtonUp_Read_REG);
+static const uint8_t ReadButtonDown = _SFR_IO_ADDR(ButtonDown_Read_REG);
+static_assert(portLED == portBuzzer, "Choose the same port for the Buttons");
+
+#define Shared_Button_READ ButtonDown_Read_REG
 // Timer related code
 // Function to setup the timer for this hardware
 // Setup timer 0 to trigger an interrupt once per ms
