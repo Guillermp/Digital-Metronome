@@ -39,16 +39,16 @@ int main() {
     sei();
 
     
-    if (button_up.button_event == 1) {
+    if (button_up.button_pressed == 1) {
         cli();
-        button_up.button_event = 0;
+        button_up.button_pressed = 0;
         sei();
         increaseMetronomeRate();
         Serial.println("Incresed the rate");
     }
-    if (button_down.button_event == 1) {
+    if (button_down.button_pressed == 1) {
         cli();
-        button_down.button_event = 0;
+        button_down.button_pressed = 0;
         sei();
         decreaseMetronomeRate();
         Serial.println("Decreased the rate");

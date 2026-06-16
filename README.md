@@ -7,7 +7,7 @@ This repo provides the implementation of a digital metronome using the ATmega328
 > Side Note: an implementation using the NUCLEO-F401RE can be found in the folder `Implementation on NUCLEO-F401RE`.
 
 Required hardware:
-- Button: To change the BPM of the metronome.
+- Buttons: To change the BPM of the metronome (one to increase the BPM and another one to decrese it).
 - LED: Shows the metronome's pulse.
 - Buzzer: to create the click of the metronome.
 - Display **(to be implemented in the future)**: displays the current BPM of the metronome.
@@ -27,7 +27,9 @@ Hardware interface specified in the ioMapping_v1.h and ioMapping.h files.
 
 Ex for the version 1 of the board (`ioMapping_v1.h`)
 Required hardware:
-- Button: Pin D9, which corresponds to the pin PB1 in the microcontroller. The timer 0 requests checking the reading periodically.
+- Buttons: 
+    - Button to increase the BPM: Pin D9, which corresponds to the pin PB1 in the microcontroller. The timer 0 requests checking the reading periodically (once every ms) and the pressed state is validated by `threshold_debouncing` consistent readings.
+    - Button to decrease the BPM: Pin D10, which corresponds to the pin PB2 in the microcontroller. The timer 0 requests checking the reading periodically, in the same way as for the other button.
 - LED: Pin D13, which corresponds to the pin PB5 in the microcontroller. The timer 1 toggles the LED.
 - Buzzer: Pin D8 which corresponds to the pin PB0 which in the microcontroller. The timer 1 toggles the Buzzer.
 

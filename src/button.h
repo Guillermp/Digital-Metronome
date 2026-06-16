@@ -9,7 +9,7 @@ const static int threshold_debouncing = 1000;
 struct Button {
     volatile uint8_t debounced_button_value;
     volatile uint16_t counter;
-    volatile uint8_t button_event;
+    volatile uint8_t button_pressed;
     volatile uint8_t readBit;
 };
 
@@ -44,7 +44,7 @@ void readButton(volatile struct Button* butonPtr) {
         
         if (butonPtr->counter == 0) {
            
-            butonPtr->button_event = 1;
+            butonPtr->button_pressed = 1;
             butonPtr->debounced_button_value = raw_reading;
             butonPtr->counter = threshold_debouncing;
 
