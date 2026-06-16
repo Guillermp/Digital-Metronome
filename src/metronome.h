@@ -33,15 +33,25 @@ void initializeMetronomeBPM(void){
 
 }
 
-void modifyMetronomeRate(void) {
+void increaseMetronomeRate(void) {
     step++;
-    if (step >= ARRAY_LEN(values)) step = 0;
+    if (step >= ARRAY_LEN(values)-1) step = 0;
     cli();
     Metronome_Compare_Reg = values[step];
     Metronome_Counter_Reg = 0;
     sei();
 }
 
+void decreaseMetronomeRate(void) {
+    if (step == 0)
+        step = ARRAY_LEN(values) - 1;
+    else
+        step--;
+    cli();
+    Metronome_Compare_Reg = values[step];
+    Metronome_Counter_Reg = 0;
+    sei();
+}
 double getMetronomeBPM(void) {
     double bps = F_clockMetronome/(PrescalerMetronome*(values[step]+1));
     return bps*60;

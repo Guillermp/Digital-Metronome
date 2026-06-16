@@ -1,6 +1,7 @@
 // ---- Board version 1 --- //
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#include <assert.h>
 
 // Registers and bits for the digital OUTPUT needed for the LED
 #define LED_OUT_REG PORTB
@@ -17,17 +18,37 @@
 #define Buzzer_DIR_REG_BIT DDB0 // PB0 which is D8 in the Arduino Uno board
 
 
-// Registers and bits for the digital INPUT needed for the Button
-#define Button_OUT_REG PORTB
-#define Button_DIR_REG DDRB 
+// Registers and bits for the digital INPUT needed for the Buttons
+// For the button that increases the BPM of the Metornome
+#define ButtonUp_OUT_REG PORTB
+#define ButtonUp_DIR_REG DDRB 
 
-#define Button_OUT_REG_BIT  PORTB1
-#define Button_DIR_REG_BIT DDB1 // PB1 which is D9 in the Arduino Uno board
+#define ButtonUp_OUT_REG_BIT PORTB1
+#define ButtonUp_DIR_REG_BIT DDB1 // PB1 which is D9 in the Arduino Uno board
+
+#define ButtonUp_Read_REG PINB
+#define ButtonUp_Read_REG_BIT PINB1
+
+
+// For the button that decreases the BPM of the Metornome
+#define ButtonDown_OUT_REG PORTB
+#define ButtonDown_DIR_REG DDRB 
+
+#define ButtonDown_OUT_REG_BIT  PORTB2
+#define ButtonDown_DIR_REG_BIT DDB2 // PB1 which is D9 in the Arduino Uno board
+
+#define ButtonDown_Read_REG PINB
+#define ButtonDown_Read_REG_BIT PINB2
 
 
 #define Metronome_Compare_Reg OCR1A
 #define Metronome_Counter_Reg TCNT1
 
+static const uint8_t portLED = _SFR_IO_ADDR(LED_OUT_REG);
+static const uint8_t portBuzzer = _SFR_IO_ADDR(Buzzer_OUT_REG);
+static_assert(portLED == portBuzzer, "Choose the same port for the LED and the Buzzer");
+
+#define Shared_OUT_REG LED_OUT_REG
 // Timer related code
 // Function to setup the timer for this hardware
 // Setup timer 0 to trigger an interrupt once per ms

@@ -7,38 +7,50 @@
 
 // Read the button periodically
 ISR(Button_COMPA_vect) {
-  readButton();
+  //readButton_Up_only();
+  readButton(&debounced_button_value_Up, ButtonUp_Read_REG_BIT, &button_event_Up, &counterUp);
+  readButton(&debounced_button_value_Down, ButtonDown_Read_REG_BIT, &button_event_Down, &counterDown);
 }
 
 // Metronome
 ISR(Metronome_COMPA_vect) {
-  LED_OUT_REG ^= (1 << LED_OUT_REG_BIT); //Toggle LED
-  Buzzer_OUT_REG ^= (1 << Buzzer_OUT_REG_BIT); //Toggle Buzzer
+  //Toggle LED and the Buzzer
+  Shared_OUT_REG ^= (1 << LED_OUT_REG_BIT) | (1 << Buzzer_OUT_REG_BIT); 
 }
 
 int main() {
 
   // Setup
-  initButton();
+  initButtons();
   initLED();
   initBuzzer ();
   sei();
   setupTimerButton();
   setupTimerMetronome();
   initializeMetronomeBPM();
+  Serial.begin(9600);
 
   // loop
   while(true){
 
-    // If the button is pressed then modify the blinking rate
     cli();
-    uint8_t button = debounced_button_value;
-    debounced_button_value = 0;
+    debounced_button_value_Up = 0;
+    debounced_button_value_Down = 0;
     sei();
 
-    if (button_event == 1) {
-        button_event = 0;
-        modifyMetronomeRate(); // Modifies the rate of the metronome
+    
+    if (button_event_Up == 1) {
+        cli();
+        button_event_Up = 0;
+        sei();
+        increaseMetronomeRate();
+        Serial.println("Incresed the rate");
+    }
+    if (button_event_Down == 1) {
+        cli();
+        button_event_Down = 0;
+        sei();
+        decreaseMetronomeRate();
     }
 
   }
