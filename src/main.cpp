@@ -8,8 +8,8 @@
 // Read the button periodically
 ISR(Button_COMPA_vect) {
   //readButton_Up_only();
-  readButton(&button_up);
-  readButton(&button_down);
+  readButtonDebounced(&button_up);
+  readButtonDebounced(&button_down);
 }
 
 // Metronome
@@ -32,27 +32,8 @@ int main() {
 
   // loop
   while(true){
+    //Serial.println(getMetronomeBPM());
 
-    cli();
-    button_up.debounced_button_value = 0;
-    button_down.debounced_button_value = 0;
-    sei();
-
-    
-    if (button_up.button_pressed == 1) {
-        cli();
-        button_up.button_pressed = 0;
-        sei();
-        increaseMetronomeRate();
-        //Serial.println("Incresed the rate");
-    }
-    if (button_down.button_pressed == 1) {
-        cli();
-        button_down.button_pressed = 0;
-        sei();
-        decreaseMetronomeRate();
-        //Serial.println("Decreased the rate");
-    }
 
   }
 }
