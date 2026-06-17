@@ -1,13 +1,6 @@
-#include "ioMapping.h"
-
-#define setupTimerMetronome setupTimer1
-#define Metronome_COMPA_vect COMP_Interrupt_Timer1
-#define PrescalerMetronome Prescaler_Timer1
-#define F_clockMetronome F_clock_Timer1
+#include "metronome.h"
 
 volatile static uint8_t step = 0;
-
-#define ARRAY_LEN(arr) (sizeof(arr) / sizeof(arr[0]))
 
 // Remember that the LED is toggles every timer interrupt so we need to ticks for one tick of the metronome!!!
 const static double values[] = {
@@ -35,7 +28,7 @@ void initializeMetronomeBPM(void){
 
 void increaseMetronomeRate(void) {
     step++;
-    if (step >= ARRAY_LEN(values)-1) step = 0;
+    if (step >= ARRAY_LEN(values)) step = 0;
     cli();
     Metronome_Compare_Reg = values[step];
     Metronome_Counter_Reg = 0;

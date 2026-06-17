@@ -1,4 +1,8 @@
 #pragma once
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // ---- Using the ATmega328P ---- //
 // ---- Use a compiler flag to choose the board version --- //
 #ifdef COMPILING_FOR_V1
@@ -13,6 +17,6 @@
 #endif
 
 
-
-
-
+#ifdef __cplusplus
+}
+#endif

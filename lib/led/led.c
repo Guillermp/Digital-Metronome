@@ -1,5 +1,4 @@
-#pragma once
-#include "ioMapping.h"
+#include "led.h"
 
 void initLED(void) {
     LED_DIR_REG |= (1 << LED_DIR_REG_BIT);  // set pin direction to output

@@ -3,6 +3,10 @@
 #include <avr/interrupt.h>
 #include <assert.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // Registers and bits for the digital OUTPUT needed for the LED
 #define LED_OUT_REG PORTB
 #define LED_DIR_REG DDRB
@@ -44,57 +48,33 @@
 #define Metronome_Compare_Reg OCR1A
 #define Metronome_Counter_Reg TCNT1
 
+/*
 static const uint8_t portLED = _SFR_IO_ADDR(LED_OUT_REG);
 static const uint8_t portBuzzer = _SFR_IO_ADDR(Buzzer_OUT_REG);
 static_assert(portLED == portBuzzer, "Choose the same port for the LED and the Buzzer");
-
+*/
 #define Shared_OUT_REG LED_OUT_REG
 
+/*
 static const uint8_t ReadButtonUp = _SFR_IO_ADDR(ButtonUp_Read_REG);
 static const uint8_t ReadButtonDown = _SFR_IO_ADDR(ButtonDown_Read_REG);
 static_assert(portLED == portBuzzer, "Choose the same port for the Buttons");
+*/
 
 #define Shared_Button_READ ButtonDown_Read_REG
 // Timer related code
 // Function to setup the timer for this hardware
 // Setup timer 0 to trigger an interrupt once per ms
-void setupTimer0(void) {
-    TCCR0A = 0;
-    TCCR0B = 0;
-    TCNT0  = 0;
-
-    // Compare value (8-bit timer → max 255)
-    OCR0A = 249;
-
-    // CTC mode (Clear Timer on Compare Match)
-    TCCR0A |= (1 << WGM01);
-
-    // Enable Compare Match A interrupt
-    TIMSK0 |= (1 << OCIE0A);
-
-    // Prescaler = 64
-    TCCR0B |= (1 << CS01) | (1 << CS00);
-}
+void setupTimer0(void);
 
 #define COMP_Interrupt_Timer0 TIMER0_COMPA_vect
 
-static inline void setupTimer1(void) {
-    TCCR1A = 0;
-    TCCR1B = 0;
-    TCNT1  = 0;
-    // Compare target count (16-bit timer → max 65535)
-    OCR1A = 15624;
-
-    // Timer setup to compare mode
-    TCCR1B |= (1 << WGM12);
-
-    // Setup Compare interrupt
-    TIMSK1 |= (1 << OCIE1A);
-
-    // Set prescale to 1024
-    TCCR1B |= (1 << CS12) | (1 << CS10);
-}
+void setupTimer1(void);
 
 #define COMP_Interrupt_Timer1 TIMER1_COMPA_vect
 #define Prescaler_Timer1 1024 // Make sure is consistent
 #define F_clock_Timer1 16000000 // Make sure is consistent
+
+#ifdef __cplusplus
+}
+#endif

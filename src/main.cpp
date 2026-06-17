@@ -28,7 +28,7 @@ int main() {
   setupTimerButton();
   setupTimerMetronome();
   initializeMetronomeBPM();
-  Serial.begin(9600);
+  //Serial.begin(9600);
 
   // loop
   while(true){
@@ -44,14 +44,14 @@ int main() {
         button_up.button_pressed = 0;
         sei();
         increaseMetronomeRate();
-        Serial.println("Incresed the rate");
+        //Serial.println("Incresed the rate");
     }
     if (button_down.button_pressed == 1) {
         cli();
         button_down.button_pressed = 0;
         sei();
         decreaseMetronomeRate();
-        Serial.println("Decreased the rate");
+        //Serial.println("Decreased the rate");
     }
 
   }
