@@ -2,33 +2,46 @@
 
 volatile static uint8_t step = 0;
 
-// Remember that the LED is toggles every timer interrupt so we need to ticks for one tick of the metronome!!!
+// Compare values for timer 1 to achieve the desired BPMs (check the documentation)
 const static double values[] = {
-    7811.5,
-    6695.4,
-    5858.4,
-    5207.3,
-    4686.5,
-    4260.4,
-    3905.3,
-    3604.8,
-    3347.2,
-    3124.0,
-    2928.7
+    15624,
+    13392,
+    11718,
+    10416,
+    9374,
+    8522,
+    7812,
+    7211,
+    6695,
+    6249,
+    5858
 };
 
 void initializeMetronomeBPM(void){
     // set the BPM to the initial value of the table
     cli();
+    step = 0;
     Metronome_Compare_Reg = values[0];
     Metronome_Counter_Reg = 0;
     sei();
 
 }
 
+// Pure logic functions
+uint8_t step_increase(uint8_t current_step, uint8_t array_len) {
+    current_step++;
+    if (current_step >= array_len) current_step = 0;
+    return current_step;
+}
+
+uint8_t step_decrease(uint8_t current_step, uint8_t array_len) {
+    if (current_step == 0)
+        return array_len - 1;
+    return current_step - 1;
+}
+
 void increaseMetronomeRate(void) {
-    step++;
-    if (step >= ARRAY_LEN(values)) step = 0;
+    step = step_increase(step, ARRAY_LEN(values));
     cli();
     Metronome_Compare_Reg = values[step];
     Metronome_Counter_Reg = 0;
@@ -36,10 +49,7 @@ void increaseMetronomeRate(void) {
 }
 
 void decreaseMetronomeRate(void) {
-    if (step == 0)
-        step = ARRAY_LEN(values) - 1;
-    else
-        step--;
+    step = step_decrease(step, ARRAY_LEN(values));
     cli();
     Metronome_Compare_Reg = values[step];
     Metronome_Counter_Reg = 0;
