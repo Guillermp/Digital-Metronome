@@ -1,4 +1,7 @@
 # Metronome Project
+## Demo of the current prototype
+
+https://github.com/user-attachments/assets/ab10ca27-0545-46ae-9c20-4c6e0ad22866
 
 ## Introduction
 
