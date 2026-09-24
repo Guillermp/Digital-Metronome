@@ -1,5 +1,6 @@
 #pragma once
 #include "ioMapping.h"
+#include "lcd_wrapper.h"
 
 #ifdef __cplusplus
 extern "C" {

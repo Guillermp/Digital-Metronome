@@ -33,7 +33,7 @@ Required hardware:
 - LED: Pin D13, which corresponds to the pin PB5 in the microcontroller. The timer 1 toggles the LED.
 - Buzzer: Pin D8 which corresponds to the pin PB0 which in the microcontroller. The timer 1 toggles the Buzzer.
 
-- Display **(to implemented in the future)**: to be determined.
+- Display **(to implemented in the future)**: to be determined. [Link to the docuntation of the e-ink display use](https://www.waveshare.com/wiki/1.54inch_e-Paper_Module_Manual#Introduction)
 
 > Note that the LED and the buzzers are toggled by Timer 1. This means that for a full click cycle (ON and OFF states), Timer 1 needs to tick twice: once to turn them on and once to turn them off. **This means that the frequency of Timer 1 is twice the frequency of the metronome**.
 

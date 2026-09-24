@@ -21,10 +21,11 @@ ISR(Metronome_COMPA_vect) {
 int main() {
 
   // Setup
+  init();
   initButtons();
   initLED();
   initBuzzer ();
-  sei();
+  lcd_init();
   setupTimerButton();
   setupTimerMetronome();
   initializeMetronomeBPM();

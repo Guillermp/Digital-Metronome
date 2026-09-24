@@ -24,6 +24,8 @@ void initializeMetronomeBPM(void){
     Metronome_Compare_Reg = values[0];
     Metronome_Counter_Reg = 0;
     sei();
+    lcd_print("BPM: ");
+    lcd_print_double(getMetronomeBPM(),2);
 
 }
 
@@ -46,6 +48,9 @@ void increaseMetronomeRate(void) {
     Metronome_Compare_Reg = values[step];
     Metronome_Counter_Reg = 0;
     sei();
+    lcd_set_cursor(0, 0);
+    lcd_print("BPM: ");
+    lcd_print_double(getMetronomeBPM(),2);
 }
 
 void decreaseMetronomeRate(void) {
@@ -54,6 +59,9 @@ void decreaseMetronomeRate(void) {
     Metronome_Compare_Reg = values[step];
     Metronome_Counter_Reg = 0;
     sei();
+    lcd_set_cursor(0, 0);
+    lcd_print("BPM: ");
+    lcd_print_double(getMetronomeBPM(),2);
 }
 double getMetronomeBPM(void) {
     double bps = F_clockMetronome/(PrescalerMetronome*(values[step]+1));
