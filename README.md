@@ -9,6 +9,8 @@ This repo provides the implementation of a digital metronome using the ATmega328
 
 > Side Note: an implementation using the NUCLEO-F401RE can be found in the folder `Implementation on NUCLEO-F401RE`.
 
+> Another Side Note: I have added a new implementation using FreeRTOS on ESP32 to a [new repo](https://github.com/Guillermp/Digital-Metronome-w-FreeRTOS)
+
 Required hardware:
 - Buttons: To change the BPM of the metronome (one to increase the BPM and another one to decrese it).
 - LED: Shows the metronome's pulse.
